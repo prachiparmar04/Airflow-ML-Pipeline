@@ -1,7 +1,10 @@
 version: '3'
+
 services:
   airflow:
-    build: training-pipeline/.
+    build:
+      context: ./training-pipeline
+      dockerfile: Dockerfile
     restart: always
     environment:
       - AIRFLOW__CORE__LOAD_EXAMPLES=False
@@ -16,3 +19,13 @@ services:
       airflow users create --username admin --password admin --firstname Admin --lastname Admin --role Admin --email admin@example.com &&
       airflow scheduler &
       exec airflow webserver"
+
+  inference:
+    build:
+      context: ./inference
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./training-pipeline/data/models:/app/models

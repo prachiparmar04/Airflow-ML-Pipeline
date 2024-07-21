@@ -1,0 +1,77 @@
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+
+# Define mappings for label encoding
+Dependants = {'No': 0, 'Yes': 1}
+Contract = {'Month-to-month': 0, 'Two year': 2, 'One year': 1}
+OnlineSecurity = {'No': 0, 'Yes': 2, 'No internet service': 1}
+TechSupport = {'No': 0, 'Yes': 2, 'No internet service': 1}
+
+def tokenization(features):
+    """
+    Tokenizes a list of feature dictionaries into a list of lists with label encoding.
+
+    Parameters:
+    features (list): List of dictionaries, where each dictionary contains the features.
+
+    Returns:
+    list: List of lists, each with length of 6 after label encoding.
+    
+    Raises:
+    ValueError: If any feature value is invalid or missing.
+    """
+    encoded_features = []
+
+    for feature in features:
+        try:
+            dependants_encoded = Dependants[feature['Dependants']]
+        except KeyError as e:
+            logging.error(f"Error processing 'Dependants': {e}")
+            raise ValueError(f"Invalid value or missing key for 'Dependants': {feature.get('Dependants')}")
+
+        try:
+            total_charges_encoded = float(feature['TotalCharges'])
+        except (ValueError, TypeError) as e:
+            logging.error(f"Error converting 'TotalCharges' to float: {e}")
+            raise ValueError(f"Invalid value for 'TotalCharges': {feature.get('TotalCharges')}")
+
+        try:
+            contract_encoded = Contract[feature['Contract']]
+        except KeyError as e:
+            logging.error(f"Error processing 'Contract': {e}")
+            raise ValueError(f"Invalid value or missing key for 'Contract': {feature.get('Contract')}")
+
+        try:
+            tenure_months_encoded = int(feature['TenureMonths'])
+        except (ValueError, TypeError) as e:
+            logging.error(f"Error converting 'TenureMonths' to int: {e}")
+            raise ValueError(f"Invalid value for 'TenureMonths': {feature.get('TenureMonths')}")
+
+        try:
+            online_security_encoded = OnlineSecurity[feature['OnlineSecurity']]
+        except KeyError as e:
+            logging.error(f"Error processing 'OnlineSecurity': {e}")
+            raise ValueError(f"Invalid value or missing key for 'OnlineSecurity': {feature.get('OnlineSecurity')}")
+
+        try:
+            tech_support_encoded = TechSupport[feature['TechSupport']]
+        except KeyError as e:
+            logging.error(f"Error processing 'TechSupport': {e}")
+            raise ValueError(f"Invalid value or missing key for 'TechSupport': {feature.get('TechSupport')}")
+
+        # Create a list of encoded features
+        encoded_feature_list = [
+            contract_encoded,
+            tenure_months_encoded,
+            online_security_encoded,
+            tech_support_encoded,
+            dependants_encoded,
+            total_charges_encoded 
+        ]
+        
+        encoded_features.append(encoded_feature_list)
+    
+    logging.debug('Tokenization completed successfully. Encoded features: %s', encoded_features)
+    return encoded_features
