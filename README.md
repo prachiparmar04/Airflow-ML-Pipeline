@@ -1,26 +1,22 @@
 ## Repo Structure 
 
-
 ML-CHURN-PIPELINE/
 │
-├── training-pipleine/
-    ├── dags/
-    │   └── utils/ churn_pipeline.py # airlfow dag pipeline for model training
-    │
-    └── data/
-        ├── models/
-        ├── embeddings/
-        └── rawdata/
-|
+├── training-pipeline/
+│   ├── dags/
+│   │   └── utils/
+│   │       └── churn_pipeline.py  # Airflow DAG pipeline for model training
+│   └── data/
+│       ├── models/
+│       ├── embeddings/
+│       └── rawdata/
+│
 ├── inference/
-|   ├── resources/
-|   ├── utills/
-|
-|
+│   ├── resources/
+│   ├── utils/
+│
 ├── requirements.txt
 ├── README.md
 ├── Dockerfile
-├── pod.yaml # to create k8s pod for inference deployment
-└── docker-compose.yaml # to create docker for inference deployment & training pipeline
-
-
+├── pod.yaml  # To create k8s pod for inference deployment
+└── docker-compose.yaml  # To create docker for inference deployment & training pipeline
