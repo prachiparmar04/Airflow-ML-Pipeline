@@ -1,0 +1,18 @@
+version: '3'
+services:
+  airflow:
+    build: training-pipeline/.
+    restart: always
+    environment:
+      - AIRFLOW__CORE__LOAD_EXAMPLES=False
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./training-pipeline/dags:/opt/airflow/dags
+      - ./training-pipeline/data:/opt/airflow/data
+    command: >
+      bash -c "
+      airflow db init &&
+      airflow users create --username admin --password admin --firstname Admin --lastname Admin --role Admin --email admin@example.com &&
+      airflow scheduler &
+      exec airflow webserver"
