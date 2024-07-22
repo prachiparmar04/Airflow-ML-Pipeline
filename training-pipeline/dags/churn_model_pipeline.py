@@ -24,7 +24,7 @@ default_args = {
 }
 
 dag = DAG(
-    'Task-1-Practice',
+    'Churn-Pipeline',
     default_args=default_args,
     description='A simple DAG to load and transform CSV data',
     schedule_interval=None,
