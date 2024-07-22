@@ -1,22 +1,12 @@
-## Repo Structure 
+# ML-CHURN-PIPELINE
 
-ML-CHURN-PIPELINE/
-│
-├── training-pipeline/
-│   ├── dags/
-│   │   └── utils/
-│   │       └── churn_pipeline.py  # Airflow DAG pipeline for model training
-│   └── data/
-│       ├── models/
-│       ├── embeddings/
-│       └── rawdata/
-│
-├── inference/
-│   ├── resources/
-│   ├── utils/
-│
-├── requirements.txt
-├── README.md
-├── Dockerfile
-├── pod.yaml  # To create k8s pod for inference deployment
-└── docker-compose.yaml  # To create docker for inference deployment & training pipeline
+This project contains two main folders: `training-pipeline` and `inference`.
+
+1. **training-pipeline**:
+    - An Airflow pipeline for ETL (Extract, Transform, Load) and model training.
+  
+2. **inference**:
+    - This folder is used to deploy the trained model as an API in a Docker/Kubernetes container. It automatically picks the latest trained model.
+
+## Repo Structure
+
